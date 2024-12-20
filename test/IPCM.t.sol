@@ -10,33 +10,34 @@ contract IPCMTest is Test {
     string testCid = "QmTest123";
 
     function setUp() public {
-        ipcm = new IPCM(owner);
+        ipcm = new IPCM(owner, testCid);
         vm.startPrank(owner);
     }
 
     function testSetValue() public {
-        ipcm.setValue(testCid);
-        assertEq(ipcm.getValue(), testCid);
+        ipcm.updateMapping(testCid);
+        assertEq(ipcm.getMapping(), testCid);
     }
 
     function testOnlyOwnerCanSetValue() public {
         vm.stopPrank();
         vm.startPrank(address(2));
         vm.expectRevert();
-        ipcm.setValue(testCid);
+        ipcm.updateMapping(testCid);
     }
 
     function testEmitsEvent() public {
         emit IPCM.MappingUpdated(testCid);
-        ipcm.setValue(testCid);
+        ipcm.updateMapping(testCid);
     }
 
     function testGetValue() public {
-        string memory emptyValue = ipcm.getValue();
-        assertEq(emptyValue, "");
+        string memory initialValue = ipcm.getMapping();
+        assertEq(initialValue, testCid);
 
-        ipcm.setValue(testCid);
-        string memory newValue = ipcm.getValue();
-        assertEq(newValue, testCid);
+        string memory newTestCid = "QmTest456";
+        ipcm.updateMapping(newTestCid);
+        string memory newValue = ipcm.getMapping();
+        assertEq(newValue, newTestCid);
     }
 }

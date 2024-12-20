@@ -12,7 +12,7 @@ contract IPCMScript is Script {
     function run() public {
         vm.startBroadcast();
 
-        ipcm = new IPCM(msg.sender);
+        ipcm = new IPCM(msg.sender, "ipfs://");
 
         vm.stopBroadcast();
     }
