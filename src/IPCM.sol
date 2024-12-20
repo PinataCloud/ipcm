@@ -1,14 +1,22 @@
-// SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.8.13;
+// SPDX-License-Identifier: MIT
+// Compatible with OpenZeppelin Contracts ^5.0.0
+pragma solidity ^0.8.22;
 
-contract IPCM {
-    uint256 public number;
+import {Ownable} from "../lib/openzeppelin-contracts/contracts/access/Ownable.sol";
 
-    function setNumber(uint256 newNumber) public {
-        number = newNumber;
+contract IPCM is Ownable {
+    constructor(address owner) Ownable(owner) {}
+
+    string private cidMapping;
+
+    event MappingUpdated(string value);
+
+    function setValue(string memory value) public onlyOwner {
+        cidMapping = value;
+        emit MappingUpdated(value);
     }
 
-    function increment() public {
-        number++;
+    function getValue() public view returns (string memory) {
+        return cidMapping;
     }
 }

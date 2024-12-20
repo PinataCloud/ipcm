@@ -1,5 +1,5 @@
-// SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.8.13;
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.22;
 
 import {Script, console} from "forge-std/Script.sol";
 import {IPCM} from "../src/IPCM.sol";
@@ -12,7 +12,7 @@ contract IPCMScript is Script {
     function run() public {
         vm.startBroadcast();
 
-        ipcm = new IPCM();
+        ipcm = new IPCM(msg.sender);
 
         vm.stopBroadcast();
     }
