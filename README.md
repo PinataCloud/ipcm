@@ -1,5 +1,7 @@
 ## IPCM
 
+InterPlanetary CID Mapping
+
 ![cover](https://dweb.mypinata.cloud/ipfs/bafkreigsap637s5qtmp2cqomi3tkjlz62pet35x3cfbjqzh7mmbioiooei)
 
 **IPCM is a smart contract that holds an IPFS CID which can be updated on chain, proving a simple solution to dynamic offchain data for IPFS**
