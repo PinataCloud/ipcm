@@ -1,15 +1,13 @@
 // SPDX-License-Identifier: MIT
 // Compatible with OpenZeppelin Contracts ^5.0.0
-pragma solidity ^0.8.22;
+pragma solidity ^0.8.23;
 
 import {Ownable} from "../lib/openzeppelin-contracts/contracts/access/Ownable.sol";
 
 contract IPCM is Ownable {
     string private cidMapping;
 
-    constructor(address owner, string memory initialCID) Ownable(owner) {
-        cidMapping = initialCID;
-    }
+    constructor(address owner) Ownable(owner) {}
 
     event MappingUpdated(string value);
 

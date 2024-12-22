@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.22;
+pragma solidity ^0.8.23;
 
 import {Script, console} from "forge-std/Script.sol";
 import {IPCM} from "../src/IPCM.sol";
@@ -12,7 +12,7 @@ contract IPCMScript is Script {
     function run() public {
         vm.startBroadcast();
 
-        ipcm = new IPCM(msg.sender, "ipfs://");
+        ipcm = new IPCM(msg.sender);
 
         vm.stopBroadcast();
     }

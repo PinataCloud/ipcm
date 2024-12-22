@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.22;
+pragma solidity ^0.8.23;
 
 import {Test, console} from "forge-std/Test.sol";
 import {IPCM} from "../src/IPCM.sol";
@@ -10,7 +10,7 @@ contract IPCMTest is Test {
     string testCid = "QmTest123";
 
     function setUp() public {
-        ipcm = new IPCM(owner, testCid);
+        ipcm = new IPCM(owner);
         vm.startPrank(owner);
     }
 
@@ -32,6 +32,7 @@ contract IPCMTest is Test {
     }
 
     function testGetValue() public {
+        ipcm.updateMapping(testCid);
         string memory initialValue = ipcm.getMapping();
         assertEq(initialValue, testCid);
 
