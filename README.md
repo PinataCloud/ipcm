@@ -111,52 +111,52 @@ import { abi } from "../utils/contract";
 import { pinata } from "../utils/pinata";
 
 export default {
-	async fetch(
-		request: Request,
-		env: Env,
-		ctx: ExecutionContext,
-	): Promise<Response> {
-		try {
-			const publicClient = createPublicClient({
-				chain: baseSepolia,
-				transport: http(),
-			});
+  async fetch(
+    request: Request,
+    env: Env,
+    ctx: ExecutionContext,
+  ): Promise<Response> {
+    try {
+      const publicClient = createPublicClient({
+        chain: baseSepolia,
+        transport: http(),
+      });
 
-			const cid = await publicClient.readContract({
-				address: "0x81FBD1886121f8575734808959DF808D19De170D",
-				abi: abi,
-				functionName: "getMapping",
-			});
+      const cid = await publicClient.readContract({
+        address: "0x81FBD1886121f8575734808959DF808D19De170D",
+        abi: abi,
+        functionName: "getMapping",
+      });
 
-			if (!cid) {
-				throw new Error(`Failed to fetch latest state: ${cid}`);
-			}
+      if (!cid) {
+        throw new Error(`Failed to fetch latest state: ${cid}`);
+      }
 
-			const url = await pinata.gateways.convert(cid as string);
+      const url = await pinata.gateways.convert(cid as string);
 
-			const response = await fetch(url);
+      const response = await fetch(url);
 
-			if (!response.ok) {
-				throw new Error(`Failed to fetch from CDN: ${response.statusText}`);
-			}
+      if (!response.ok) {
+        throw new Error(`Failed to fetch from CDN: ${response.statusText}`);
+      }
 
-			const contentType = response.headers.get("content-type");
+      const contentType = response.headers.get("content-type");
 
-			return new Response(response.body, {
-				status: 200,
-				headers: {
-					"Content-Type": contentType || "text/html",
-					"Cache-Control": "public, max-age=3600",
-				},
-			});
-		} catch (error) {
-			console.error("Error:", error);
-			return new Response(`Error: ${error}`, {
-				status: 500,
-				headers: { "Content-Type": "text/plain" },
-			});
-		}
-	},
+      return new Response(response.body, {
+        status: 200,
+        headers: {
+          "Content-Type": contentType || "text/html",
+          "Cache-Control": "public, max-age=3600",
+        },
+      });
+    } catch (error) {
+     	console.error("Error:", error);
+     	return new Response(`Error: ${error}`, {
+    		status: 500,
+    		headers: { "Content-Type": "text/plain" },
+     	});
+    }
+  },
 } satisfies ExportedHandler<Env>;
 ```
 
