@@ -1,6 +1,6 @@
 ## IPCM
 
-InterPlanetary CID Mapping
+**InterPlanetary CID Mapping**
 
 ![cover](https://dweb.mypinata.cloud/ipfs/bafkreigsap637s5qtmp2cqomi3tkjlz62pet35x3cfbjqzh7mmbioiooei)
 
