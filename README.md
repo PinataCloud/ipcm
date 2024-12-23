@@ -4,9 +4,9 @@
 
 ![cover](https://dweb.mypinata.cloud/ipfs/bafkreigsap637s5qtmp2cqomi3tkjlz62pet35x3cfbjqzh7mmbioiooei)
 
-**IPCM is a smart contract that holds an IPFS CID which can be updated on chain, proving a simple solution to dynamic offchain data for IPFS**
+**IPCM is a smart contract that points to an IPFS CID which can be updated onchain, providing a simple solution to dynamic offchain data using IPFS**
 
-IPFS has been the go-to decentralized network for sharing content and websites. However it's greatest strength, immutability, is also it's greatest weakness. There are cases where you might need to update content on IPFS, but that would result in a new CID. IPCM aims to solve this through storing a simple IPFS string onchain and letting the contract be the point of reference. Benefits include:
+[IPFS](https://ipfs.io) has been the go-to decentralized network for sharing content and websites. However it's greatest strength, immutability, is also it's greatest weakness. There are cases where you might need to update content on IPFS, but that would result in a new CID. IPCM (InterPlanetary CID Mapping) aims to solve this through storing a simple IPFS string onchain and letting the contract be the point of reference. Benefits include:
 
 - Cryptographically secures ownership and updates to an onchain identity
 - Events create an onchain history of updates
@@ -14,6 +14,25 @@ IPFS has been the go-to decentralized network for sharing content and websites. 
 - Fetching the latest state is simple and fast
 
 A simple example IPCM is for static webhosting on IPFS, where you can update the IPFS reference onchain without having to deal with the compliexities of IPNS. [Check out the more detailed example below](#example-demo)
+
+```
+sequenceDiagram
+    actor User
+    participant IPFS
+    participant IPCM
+    participant Reader
+
+    User->>IPFS: Upload html1.html
+    IPFS-->>User: Return CID1
+    User->>IPCM: Set state to ipfs://CID1
+    User->>IPFS: Upload html2.html
+    IPFS-->>User: Return CID2
+    User->>IPCM: Update state to ipfs://CID2
+    Reader->>IPCM: Query latest state
+    IPCM-->>Reader: Return ipfs://CID2
+    Reader->>IPFS: Fetch CID2
+    IPFS-->>Reader: Return html2.html content
+```
 
 ## Quick Start
 
