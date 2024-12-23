@@ -123,7 +123,7 @@ const { data, contentType } = await pinata.gateways.get(cidMapping);
 
 ### Example Demo
 
-The [IPCM.dev](https://ipfs.dev) website is an example of how IPCM can be used for static webhosting. It consists of a simple Cloudflare Worker that fetches the contract state each time a request is made and renders the content through an IPFS Gateway, creating a static proxy which only requires updating the onchian reference to update the site.
+The [IPCM.dev](https://ipcm.dev/) website is an example of how IPCM can be used for static webhosting. It consists of a simple Cloudflare Worker that fetches the contract state each time a request is made and renders the content through an IPFS Gateway, creating a static proxy which only requires updating the onchian reference to update the site.
 
 ```typescript
 import { createPublicClient, http } from "viem";
