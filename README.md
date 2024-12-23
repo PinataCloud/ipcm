@@ -6,7 +6,7 @@
 
 **IPCM is a smart contract that points to an IPFS CID which can be updated onchain, providing a simple solution to dynamic offchain data using IPFS**
 
-[IPFS](https://ipfs.io) has been the go-to decentralized network for sharing content and websites. However it's greatest strength, immutability, is also it's greatest weakness. There are cases where you might need to update content on IPFS, but that would result in a new CID. IPCM (InterPlanetary CID Mapping) aims to solve this through storing a simple IPFS string onchain and letting the contract be the point of reference. Benefits include:
+[IPFS](https://ipfs.io) has been the go-to decentralized network for sharing content and websites. However it's greatest strength, immutability, is also it's greatest weakness. There are cases where you might need to update content on IPFS, but that would result in a new CID. IPCM (InterPlanetary CID Mapping) aims to solve this by storing a simple IPFS string onchain and letting the contract be the point of reference for the latest state. Benefits include:
 
 - Cryptographically secures ownership and updates to an onchain identity
 - Events create an onchain history of updates
