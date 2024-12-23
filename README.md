@@ -15,7 +15,7 @@
 
 A simple example IPCM is for static webhosting on IPFS, where you can update the IPFS reference onchain without having to deal with the compliexities of IPNS. [Check out the more detailed example below](#example-demo)
 
-```
+```mermaid
 sequenceDiagram
     actor User
     participant IPFS
