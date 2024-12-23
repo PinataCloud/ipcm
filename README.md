@@ -22,10 +22,10 @@ sequenceDiagram
     participant IPCM
     participant Reader
 
-    User->>IPFS: Upload html1.html
+    User->>IPFS: Upload siteA.html
     IPFS-->>User: Return CID1
     User->>IPCM: Set state to ipfs://CID1
-    User->>IPFS: Upload html2.html
+    User->>IPFS: Upload siteB.html
     IPFS-->>User: Return CID2
     User->>IPCM: Update state to ipfs://CID2
     Reader->>IPCM: Query latest state
