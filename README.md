@@ -17,7 +17,7 @@ A simple example IPCM is for static webhosting on IPFS, where you can update the
 
 ```mermaid
 sequenceDiagram
-    actor User
+    participant User
     participant IPFS
     participant IPCM
     participant Reader
