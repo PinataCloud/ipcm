@@ -73,38 +73,38 @@ forge v <CONTRACT_ADDRESS> \
 After IPCM is deployed you can update the CID mapping using the `updateMapping` function and the library of your choice. Here is an example with [Viem](https://viem.sh/docs/contract/writeContract#writecontract)
 
 ```typescript
-import { account, publicClient, walletClient } from './config'
-import { abi } from './ipcm_abi'
+import { account, publicClient, walletClient } from "./config";
+import { abi } from "./ipcm_abi";
 
 const { request } = await publicClient.simulateContract({
   account,
-  address: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
+  address: "0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2",
   abi: abi,
-  functionName: 'updateMapping', // Function to Update
-  args: ["ipfs://bafkreigfakpjywuxaq57zhnnma6ntvs6u5p6eurgdl5kfkjvuhg6sztmda"] // IPFS CID args
-})
-await walletClient.writeContract(request)
+  functionName: "updateMapping", // Function to Update
+  args: ["ipfs://bafkreigfakpjywuxaq57zhnnma6ntvs6u5p6eurgdl5kfkjvuhg6sztmda"], // IPFS CID args
+});
+await walletClient.writeContract(request);
 ```
 
 Once a CID has been written to the contract, it can be fetched using the `getMapping` function.
 
 ```typescript
-import { publicClient } from './client'
-import { abi } from './ipcm_abi'
+import { publicClient } from "./client";
+import { abi } from "./ipcm_abi";
 
 const data = await publicClient.readContract({
-  address: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
+  address: "0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2",
   abi: abi,
-  functionName: 'getMapping',
-})
+  functionName: "getMapping",
+});
 // ipfs://bafkreigfakpjywuxaq57zhnnma6ntvs6u5p6eurgdl5kfkjvuhg6sztmda
 ```
 
 With the CID reference you can render it into content using a tool like the [IPFS SDK](https://docs.pinata.cloud/web3/sdk)
 
 ```typescript
-import { publicClient } from './client'
-import { abi } from './ipcm_abi'
+import { publicClient } from "./client";
+import { abi } from "./ipcm_abi";
 import { PinataSDK } from "pinata-web3";
 
 const pinata = new PinataSDK({
@@ -113,12 +113,12 @@ const pinata = new PinataSDK({
 });
 
 const cidMapping = await publicClient.readContract({
-  address: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
+  address: "0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2",
   abi: abi,
-  functionName: 'getMapping',
-})
+  functionName: "getMapping",
+});
 
-const { data, contentType } = await pinata.gateways.get(cidMapping)
+const { data, contentType } = await pinata.gateways.get(cidMapping);
 ```
 
 ### Example Demo
@@ -132,52 +132,52 @@ import { abi } from "../utils/contract";
 import { pinata } from "../utils/pinata";
 
 export default {
-	async fetch(
-		request: Request,
-		env: Env,
-		ctx: ExecutionContext,
-	): Promise<Response> {
-		try {
-			const publicClient = createPublicClient({
-				chain: baseSepolia,
-				transport: http(),
-			});
+  async fetch(
+    request: Request,
+    env: Env,
+    ctx: ExecutionContext,
+  ): Promise<Response> {
+    try {
+      const publicClient = createPublicClient({
+        chain: baseSepolia,
+        transport: http(),
+      });
 
-			const cid = await publicClient.readContract({
-				address: "0x81FBD1886121f8575734808959DF808D19De170D",
-				abi: abi,
-				functionName: "getMapping",
-			});
+      const cid = await publicClient.readContract({
+        address: "0x81FBD1886121f8575734808959DF808D19De170D",
+        abi: abi,
+        functionName: "getMapping",
+      });
 
-			if (!cid) {
-				throw new Error(`Failed to fetch latest state: ${cid}`);
-			}
+      if (!cid) {
+        throw new Error(`Failed to fetch latest state: ${cid}`);
+      }
 
-			const url = await pinata.gateways.convert(cid as string);
+      const url = await pinata.gateways.convert(cid as string);
 
-			const response = await fetch(url);
+      const response = await fetch(url);
 
-			if (!response.ok) {
-				throw new Error(`Failed to fetch from CDN: ${response.statusText}`);
-			}
+      if (!response.ok) {
+        throw new Error(`Failed to fetch from CDN: ${response.statusText}`);
+      }
 
-			const contentType = response.headers.get("content-type");
+      const contentType = response.headers.get("content-type");
 
-			return new Response(response.body, {
-				status: 200,
-				headers: {
-					"Content-Type": contentType || "text/html",
-					"Cache-Control": "public, max-age=3600",
-				},
-			});
-		} catch (error) {
-			console.error("Error:", error);
-			return new Response(`Error: ${error}`, {
-				status: 500,
-				headers: { "Content-Type": "text/plain" },
-			});
-		}
-	},
+      return new Response(response.body, {
+        status: 200,
+        headers: {
+          "Content-Type": contentType || "text/html",
+          "Cache-Control": "public, max-age=3600",
+        },
+      });
+    } catch (error) {
+      console.error("Error:", error);
+      return new Response(`Error: ${error}`, {
+        status: 500,
+        headers: { "Content-Type": "text/plain" },
+      });
+    }
+  },
 } satisfies ExportedHandler<Env>;
 ```
 
